@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baking with the Gemini API</title>
+  <style>
+    .image-choice span {
+      display: block;
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+
+    .image-choice:hover span {
+      background-color: #e9e9e9;
+      color: #333;
+    }
+
+    #remove-image {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #f9f9f9;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s, color 0.3s;
+      width: 100%;
+      margin-left: 6px;
+    }
+
+    #remove-image:hover {
+      background-color: #e9e9e9;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Cari Resep Makanan Kamu!</h1>
+    <form id="image-form">
+      <div class="image-picker">
+        <label for="image-upload" class="image-choice">
+          <input type="file" id="image-upload" name="chosen-image" accept="image/*">
+          <span>Upload an image</span>
+        </label>
+        <img id="uploaded-image" src="" alt="Uploaded image will appear here" style="display:none; max-width: 100%; height: auto;"/>
+      </div>
+      <button id="remove-image" type="button">Remove Image</button>
+      <div class="prompt-box">
+        <label>
+          <input name="prompt" placeholder="Enter instructions here" type="text"
+            value="Apa nama makanan ini, apa resepnya, dan berapa kalorinya?">
+        </label>
+        <button type="submit" style="width: 100%;">Generate</button>
+      </div>
+    </form>
+    <p class="output"></p>
+  </main>
+
+  <script type="module" src="/main.js"></script>
+  <script>
+    const imageUpload = document.getElementById('image-upload');
+    const uploadedImage = document.getElementById('uploaded-image');
+    const removeImageButton = document.getElementById('remove-image');
+
+    imageUpload.addEventListener('change', () => {
+      const file = imageUpload.files[0];
+      if (file) {
+        uploadedImage.src = URL.createObjectURL(file);
+        uploadedImage.style.display = 'block';
+        removeImageButton.style.display = 'block';
+      }
+    });
+
+    removeImageButton.addEventListener('click', () => {
+      imageUpload.value = '';
+      uploadedImage.src = '';
+      uploadedImage.style.display = 'none';
+      removeImageButton.style.display = 'none';
+    });
+  </script>
+</body>
+
+</html>
